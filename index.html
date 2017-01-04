@@ -41,18 +41,16 @@
                 var position_option = {
                     enableHighAccuracy: true,
                     maximumAge: 30000,
-                    timeout: 2000
+                    timeout: 20000
                 };
-                navigator.geolocation.watchPosition(showPosition,showError, position_option);
+                navigator.geolocation.getCurrentPosition(showPosition,showError, position_option);
             }
             else{
-                navigator.geolocation.clearWatch()
                 alert("浏览器不支持定位服务！")
             }
         }
 
         function showPosition() {
-            navigator.geolocation.clearWatch()
             var latlon=position.coords.latitude+","+position.coords.longitude;
             //alert(latlon)
             var url;
