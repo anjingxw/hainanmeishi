@@ -12,10 +12,17 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qya10EHZGs7X3kQ3mXTAAr6GKB6YX5hF"></script>
     <script type="text/javascript">
+        //http://api.map.baidu.com/lbsapi/getpoint/index.html
         function showActionSheet() {
             document.getElementById("1").style.display="none";
             document.getElementById("2").style.display="";
         }
+
+        function hidActionSheet() {
+            document.getElementById("1").style.display="";
+            document.getElementById("2").style.display="none";
+        }
+
 
         var type =0;
         function  navToGaoDe() {
@@ -31,14 +38,21 @@
         {
             if (navigator.geolocation)
             {
-                navigator.geolocation.getCurrentPosition(showPosition,showError);
+                var position_option = {
+                    enableHighAccuracy: true,
+                    maximumAge: 30000,
+                    timeout: 2000
+                };
+                navigator.geolocation.watchPosition(showPosition,showError, position_option);
             }
             else{
+                navigator.geolocation.clearWatch()
                 alert("浏览器不支持定位服务！")
             }
         }
 
         function showPosition() {
+            navigator.geolocation.clearWatch()
             var latlon=position.coords.latitude+","+position.coords.longitude;
             //alert(latlon)
             var url;
@@ -61,10 +75,10 @@
             switch(error.code)
             {
                 case error.PERMISSION_DENIED:
-                        alert("User denied the request for Geolocation.");
+                        alert("用户拒绝对获取地理位置的请求。");
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
+                    alert("位置信息是不可用的。");
                     break;
                 case error.TIMEOUT:
                     alert("The request to get user location timed out.");
@@ -78,7 +92,7 @@
     <title>美食地图</title>
 </head>
 <body>
-    <div  id="allmap"></div>
+    <div  id="allmap" onclick="hidActionSheet()"></div>
     <div id="test" style="width: 100%;height:10%;background-color:#F4513B;position:absolute;top:0px;">
         <p style="width:200px;height:50px;line-height:50px;font-size:36px;text-align:center;color:white;position:absolute;
      left: 50%;
@@ -87,9 +101,9 @@
     margin-top:-25px;">美食地图</p>
     </div>
     <div id="1" style="width: 96%;height:auto;background-color:#F4513B;position:absolute;bottom:0px;margin: 0 2% 30px 2%">
-        <div style="width: auto;height:auto; margin: 10px 20px 5px 20px"><span class="text0">九爹斋菜煲</span><span> </span><span class="text1">海南菜</span> </div>
-        <div style="width: auto;height:auto; margin: 0 20px 5px 20px;background-color: #FFFFFF"><span class="text1">a</span><span class="text2">人均150元 | 珍珑坊1号 | 200M</span></div>
-        <div style="width: auto;height:auto; margin: 0 20px 10px 20px;"><span class="text1">营业时间： 09:00-22:00</span></div>
+        <div style="width: auto;height:auto; margin: 10px 20px 5px 20px"><span class="text0">南大桥海南粉店</span><span> </span><span class="text1">早餐</span> </div>
+        <div style="width: auto;height:auto; margin: 0 20px 5px 20px;background-color: #FFFFFF"><span class="text1">a</span><span class="text2">人均7元 | 龙昆北路 | 10M</span></div>
+        <div style="width: auto;height:auto; margin: 0 20px 10px 20px;"><span class="text1">营业时间： 06:00-11:00</span></div>
         <div  id="circle" onclick="showActionSheet()" style="width: 59px;  height: 59px;  background: white; position:absolute;bottom:70%;right: 10%;-moz-border-radius: 50%;  -webkit-border-radius: 50%;  border-radius: 50%;">
             <img style="width: 29px; height: 30px;margin: 15px 15px 15px 15px" src="./image/go.png">
         </div>
@@ -105,10 +119,11 @@
 <script type="text/javascript">
     // 百度地图API功能
     var map = new BMap.Map("allmap");
-    map.centerAndZoom(new BMap.Point(116.404, 39.915), 10);
-    //创建小狐狸
-    var pt = new BMap.Point(116.417, 39.909);
+    map.centerAndZoom(new BMap.Point(110.337777, 20.031952), 16);
+    var pt = new BMap.Point(110.337777, 20.031952);
     var myIcon = new BMap.Icon("./image/shape.png", new BMap.Size(20,27));
     var marker2 = new BMap.Marker(pt,{icon:myIcon});
     map.addOverlay(marker2);
+    map.addControl(new BMap.MapTypeControl());
+    map.enableScrollWheelZoom(true);
 </script>
