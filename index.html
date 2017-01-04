@@ -34,57 +34,32 @@
             getLocation();
         }
 
-        function getLocation()
-        {
-            if (navigator.geolocation)
-            {
-                var position_option = {
-                    enableHighAccuracy: true,
-                    maximumAge: 30000,
-                    timeout: 20000
-                };
-                navigator.geolocation.getCurrentPosition(showPosition,showError, position_option);
-            }
-            else{
-                alert("浏览器不支持定位服务！")
-            }
-        }
+        function getLocation() {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    var position = {
+                        lng: r.point.lng,
+                        lat: r.point.lat
+                    }
+                    var latlon=r.point.lng+","+r.point.lat;
+                    var url;
+                    if(type == 0){
+                        url = "http://api.map.baidu.com/direction?origin=latlng"+latlon+"|name:您的位置&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
+                        window.location.href = url;
+                        //"http://uri.amap.com/navigation?from=116.478346,39.997361,你好&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
+                        //window.location.href ="http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
+                    }
+                    else if (type ==1){
+                        url ="http://uri.amap.com/navigation?from="+latlon+",您的位置&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
+                        window.location.href = url;
+                    }
+                }
+                else {
+                    //alert('获取当前位置失败,请确定您开启了定位服务');
+                }
+            },{enableHighAccuracy: true});
 
-        function showPosition() {
-            var latlon=position.coords.latitude+","+position.coords.longitude;
-            //alert(latlon)
-            var url;
-            if(type == 0){
-                url = "http://api.map.baidu.com/direction?origin=latlng"+latlon+"|name:您的位置&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
-                window.location.href = url;
-                //"http://uri.amap.com/navigation?from=116.478346,39.997361,你好&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
-                //window.location.href ="http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
-            }
-            else if (type ==1){
-                url ="http://uri.amap.com/navigation?from="+latlon+",您的位置&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
-                window.location.href = url;
-            }
-            //alert(type)
-        }
-
-
-        function showError(error)
-        {
-            switch(error.code)
-            {
-                case error.PERMISSION_DENIED:
-                        alert("用户拒绝对获取地理位置的请求。");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("位置信息是不可用的。");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
         }
     </script>
     <title>美食地图</title>
@@ -124,4 +99,5 @@
     map.addOverlay(marker2);
     map.addControl(new BMap.MapTypeControl());
     map.enableScrollWheelZoom(true);
+    map.onclick = hidActionSheet();
 </script>
