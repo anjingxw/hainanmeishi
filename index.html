@@ -8,19 +8,30 @@
         .text0 {font-family:PingFangSC-Medium;  font-size: 100%;  color: #FFFFFF; letter-spacing: -0.78px;}
         .text1 {font-family: STHeitiSC-Light;  font-size: 75%;  color: #FFFFFF;  letter-spacing: -0.58px;}
         .text2 {font-family: HelveticaNeue;  font-size: 90%;  color: #9C9C9C;  letter-spacing: -0.84px;  line-height: 36px;}
-        .select {width: 100%;height: 1.6rem;line-height:  1.6rem;font-size: 1.2rem;text-align: center}
+        .select {width: 100%;height: auto;line-height:1.6rem;font-size: 24px;text-align: center}
     </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e251f49bf8f6626e363d4e06777edd96";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qya10EHZGs7X3kQ3mXTAAr6GKB6YX5hF"></script>
     <script type="text/javascript">
         //http://api.map.baidu.com/lbsapi/getpoint/index.html
         function showActionSheet() {
             document.getElementById("1").style.display="none";
             document.getElementById("2").style.display="";
+            document.getElementById("3").style.display="";
         }
 
         function hidActionSheet() {
             document.getElementById("1").style.display="";
             document.getElementById("2").style.display="none";
+            document.getElementById("3").style.display="none";
         }
 
 
@@ -45,18 +56,18 @@
                     var latlon=r.point.lng+","+r.point.lat;
                     var url;
                     if(type == 0){
-                        url = "http://api.map.baidu.com/direction?origin=latlng"+latlon+"|name:您的位置&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
+                        url = "http://api.map.baidu.com/direction?origin=latlng:"+latlon+"|name:我的位置&destination=110.337777,20.031952&region=海口&mode=driving&output=html";
                         window.location.href = url;
                         //"http://uri.amap.com/navigation?from=116.478346,39.997361,你好&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
                         //window.location.href ="http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=yourCompanyName|yourAppName";
                     }
                     else if (type ==1){
-                        url ="http://uri.amap.com/navigation?from="+latlon+",您的位置&to=116.3246,39.966577,到达&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
+                        url ="http://uri.amap.com/navigation?from="+latlon+",我的位置&to=110.337777, 20.031952,南大桥海南粉店&mode=car&policy=1&coordinate=gaode&src=mypage&callnative=1";
                         window.location.href = url;
                     }
                 }
                 else {
-                    //alert('获取当前位置失败,请确定您开启了定位服务');
+                    alert('获取当前位置失败,请确定您开启了定位服务');
                 }
             },{enableHighAccuracy: true});
 
@@ -82,10 +93,14 @@
         </div>
     </div>
 
+    <div id="3" style="width: 100%;height:100%;background:rgba(63, 63, 63, 0.5);position:absolute;top:0px;display: none"></div>
     <div id="2" style="width: 100%; height: auto;background-color:white;position:absolute;bottom:0px;display: none";>
         <p class="select" onclick="navToBaidu()">百度地图</p>
-        <hr style="size: 0.1rem"/>
+        <p style="width:100%;height:1px;background:#e6e6e6"/>
         <p class="select" onclick="navToGaoDe()">高德地图</p>
+
+        <p style="width:100%;height:5px;background-color:#e6e6e6"/>
+        <p class="select" onclick="hidActionSheet()">取消</p>
     </div>
 </body>
 </html>
@@ -94,7 +109,7 @@
     var map = new BMap.Map("allmap");
     map.centerAndZoom(new BMap.Point(110.337777, 20.031952), 16);
     var pt = new BMap.Point(110.337777, 20.031952);
-    var myIcon = new BMap.Icon("./image/shape.png", new BMap.Size(20,27));
+    var myIcon = new BMap.Icon("./image/shape.png", new BMap.Size(80,70));
     var marker2 = new BMap.Marker(pt,{icon:myIcon});
     map.addOverlay(marker2);
     map.addControl(new BMap.MapTypeControl());
