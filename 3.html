@@ -54,12 +54,13 @@
                         lng: r.point.lng,
                         lat: r.point.lat
                     }
-                    var latlon=r.point.lat+","+r.point.lng;
-                    var toLatlon = meishiData.lat+','+meishiData.lng;
+                    var latlon=r.point.lng+","+r.point.lat;
+                    var toLatlon = meishiData.lng+','+meishiData.lat;
                     var url;
                     if(type == 0){
                         gc.getLocation(r.point, function(rs){
                             latlon=r.point.lat+","+r.point.lng;
+                            toLatlon = meishiData.lat+','+meishiData.lng;
                             var addComp = rs.addressComponents;//addComp.city
                             url = "http://api.map.baidu.com/direction?origin=latlng:"+latlon+"|name:我的位置&destination="+toLatlon+"&origin_region="+addComp.city+"&destination_region="+meishiData.city+"&mode=driving&output=html";
                             //alert(url)
