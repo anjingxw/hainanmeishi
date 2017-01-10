@@ -1,0 +1,28 @@
++------------------------------------------------------------------------+
+|          LNMP V1.3 for Ubuntu Linux Server, Written by Licess          |
++------------------------------------------------------------------------+
+|         For more information please visit http://www.lnmp.org          |
++------------------------------------------------------------------------+
+|    lnmp status manage: lnmp {start|stop|reload|restart|kill|status}    |
++------------------------------------------------------------------------+
+|  phpMyAdmin: http://IP/phpmyadmin/                                     |
+|  phpinfo: http://182.92.149.139/phpinfo.php                                        |
+|  Prober:  http://IP/p.php                                              |
++------------------------------------------------------------------------+
+|  Add VirtualHost: lnmp vhost add                                       |
++------------------------------------------------------------------------+
+|  Default directory: /home/wwwroot/default                              |
++------------------------------------------------------------------------+
+|  MySQL/MariaDB root password: root                          |
++------------------------------------------------------------------------+
++-------------------------------------------+
+|    Manager for LNMP, Written by Licess    |
++-------------------------------------------+
+|              http://lnmp.org              |
++-------------------------------------------+
+nginx (pid 10003 10001) is running...
+php-fpm is runing!
+ * MySQL running (10401)
+Active Internet connections (only servers)
+
+http://api.map.baidu.com/lbsapi/getpoint/index.html
